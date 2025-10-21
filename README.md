@@ -1,6 +1,6 @@
 # X-NUCLEO-IKS5A1
 
-The X-NUCLEO-IKS5A1 is a industrial motion MEMS sensor expansion board for the STM32 Nucleo.
+The X-NUCLEO-IKS5A1 is a industrial motion MEMS and environmental sensor expansion board for the STM32 Nucleo.
 It is equipped with Arduino UNO R3 connector layout, and is designed around the ISM6HG256X 3D accelerometer and 3D gyroscope, 
 the ISM330IS 3D accelerometer and 3D gyroscope with ISPU, the IIS2DULPX 3D accelerometer, the IIS2MDC 3D magnetometer, 
 and the ILPS22QS pressure sensor.
