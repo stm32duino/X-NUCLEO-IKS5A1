@@ -44,4 +44,4 @@ You can find the source files at
 https://github.com/stm32duino/X-NUCLEO-IKS5A1
 
 The X-NUCLEO-IKS5A1 datasheet is available at  
-https://www.st.com/en/ecosystems/x-nucleo-iks5a1.html
+https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/stm32-nucleo-expansion-boards/x-nucleo-iks5a1.html
