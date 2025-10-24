@@ -94,7 +94,7 @@ void loop() {
   Mag.GetAxes(magnetometer);
 
   // Output data.
-  SerialPort.print("| Pres[hPa]: ");
+  SerialPort.print("| Press[hPa]: ");
   SerialPort.print(pressure, 2);
   SerialPort.print(" | Temp[C]: ");
   SerialPort.print(temperature, 2);
