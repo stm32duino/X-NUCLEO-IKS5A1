@@ -1,7 +1,7 @@
 /*
-   @file    X_NUCLEO_IKS5A1_ISM6HG256X_FIFO_Interrupt.ino
+  @file    X_NUCLEO_IKS5A1_ISM6HG256X_FIFO_Polling_I2C.ino
    @author  STMicroelectronics
-   @brief   Example to use the ISM6HG256X library with FIFO in interrupt mode.
+   @brief   Example to use the ISM6HG256X library with FIFO in polling mode.
  *******************************************************************************
    Copyright (c) 2025, STMicroelectronics
    All rights reserved.
@@ -21,7 +21,6 @@
 #define MEASUREMENT_TIME_INTERVAL (1000.0f/SENSOR_ODR) // In ms
 #define FIFO_SAMPLE_THRESHOLD 199
 #define FLASH_BUFF_LEN 8192
-#define INT1_pin 5 // MCU input pin connected to sensor INT1 output pin 
 
 ISM6HG256XSensor AccGyr(&Wire);
 volatile uint8_t fullFlag = 0; // FIFO full flag
@@ -42,9 +41,6 @@ void setup()
   Serial.begin(115200);
   Wire.begin();
 
-  // Enable INT1 pin.
-  attachInterrupt(INT1_pin, INT1_fullEvent_cb, RISING);
-
   // Initialize ISM6HG256X.
   AccGyr.begin();
   status |= AccGyr.Enable_X();
@@ -64,8 +60,7 @@ void setup()
   status |= AccGyr.FIFO_Set_Watermark_Level(FIFO_SAMPLE_THRESHOLD);
   // Set FIFO stop on watermark level
   status |= AccGyr.FIFO_Set_Stop_On_Fth(1);
-  // Enable FIFO full interrupt on sensor INT1 pin
-  status |= AccGyr.FIFO_Set_INT1_FIFO_Full(1);
+
   // Set FIFO in Continuous mode
   status |= AccGyr.FIFO_Set_Mode(ISM6HG256X_STREAM_MODE);
 
@@ -78,26 +73,21 @@ void setup()
 
 void loop()
 {
-  uint8_t fullStatus = 0;
+  uint16_t fifo_samples;
 
+  // Check the number of samples inside FIFO
+  if (AccGyr.FIFO_Get_Num_Samples(&fifo_samples) != ISM6HG256X_OK) {
+    Serial.println("ISM6HG256XSensor failed to get number of samples inside FIFO");
+    while (1);
+  }
   // If we reach the threshold we can empty the FIFO
-  if (fullFlag != 0) {
-    fullFlag = 0;
+  if (fifo_samples == FIFO_SAMPLE_THRESHOLD) {
 
-    if (AccGyr.FIFO_Get_Full_Status(&fullStatus) != ISM6HG256X_OK) {
-      Serial.println("ISM6HG256XSensor failed to get full status");
-      while (1);
-    }
+    // Empty the FIFO
+    Read_FIFO_Data();
 
-    if (fullStatus) {
-      fullStatus = 0;
-
-      // Empty the FIFO
-      Read_FIFO_Data();
-
-      // Print FIFO data
-      Serial.print(buff);
-    }
+    // Print FIFO data
+    Serial.print(buff);
   }
 }
 
@@ -161,8 +151,3 @@ void Read_FIFO_Data()
   pos = 0;
 }
 
-// ISR callback for INT1
-void INT1_fullEvent_cb()
-{
-  fullFlag = 1;
-}

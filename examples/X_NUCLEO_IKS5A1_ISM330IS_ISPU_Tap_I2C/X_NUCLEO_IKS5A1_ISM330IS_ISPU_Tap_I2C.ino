@@ -1,5 +1,5 @@
 /*
-   @file    X_NUCLEO_IKS5A1_ISM330IS_ISPU_Tap.ino
+  @file    X_NUCLEO_IKS5A1_ISM330IS_ISPU_Tap_I2C.ino
    @author  STMicroelectronics
    @brief   Example to use the ISM330IS ISPU Tap Detection based on the accelerometer data.
  *******************************************************************************

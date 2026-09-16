@@ -1,7 +1,7 @@
 /*
-   @file    X_NUCLEO_IKS5A1_ISM6HG256X_Free_Fall_Detection.ino
+  @file    X_NUCLEO_IKS5A1_ISM6HG256X_Tilt_Detection_I2C.ino
    @author  STMicroelectronics
-   @brief   Example to use the ISM6HG256X Free Fall Detection
+   @brief   Example to use the ISM6HG256X Tilt Detection
  *******************************************************************************
    Copyright (c) 2025, STMicroelectronics
    All rights reserved.
@@ -19,8 +19,8 @@ ISM6HG256XSensor ISM6HG256X(&Wire);
 
 //Interrupts.
 volatile int mems_event = 0;
-void INT1Event_cb();
 
+void INT1Event_cb();
 
 void setup()
 {
@@ -42,8 +42,8 @@ void setup()
   ISM6HG256X.begin();
   ISM6HG256X.Enable_X();
 
-  // Enable Free Fall Detection.
-  ISM6HG256X.Enable_Free_Fall_Detection(ISM6HG256X_INT1_PIN);
+  // Enable Tilt Detection.
+  ISM6HG256X.Enable_Tilt_Detection(ISM6HG256X_INT1_PIN);
 }
 
 void loop()
@@ -53,12 +53,12 @@ void loop()
     ISM6HG256X_Event_Status_t status;
     ISM6HG256X.Get_X_Event_Status(&status);
 
-    if (status.FreeFallStatus) {
+    if (status.TiltStatus) {
       // Led blinking.
       digitalWrite(LED_BUILTIN, HIGH);
       delay(100);
       digitalWrite(LED_BUILTIN, LOW);
-      Serial.println("Free Fall Detected!");
+      Serial.println("Tilt Detected!");
     }
   }
 }

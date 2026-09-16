@@ -9,23 +9,25 @@ The X-NUCLEO-IKS5A1 interfaces with the STM32 microcontroller or the Arduino boa
 # Examples
 
 There are several examples with the X-NUCLEO-IKS5A1 library.
-* X_NUCLEO_IKS5A1_HelloWorld: This application provides a simple example of usage of the X-NUCLEO-IKS5A1 
+* X_NUCLEO_IKS5A1_HelloWorld_I2C: This application provides a simple example of usage of the X-NUCLEO-IKS5A1 
 Expansion Board. It shows how to display on a hyperterminal the values of all on-board industrial MEMS sensors.
-* X_NUCLEO_IKS5A1_IIS2DULPX_6D_Orientation: This application shows how to use IIS2DULPX sensor to find out the 6D orientation and display data on a hyperterminal.
-* X_NUCLEO_IKS5A1_IIS2DULPX_Wake_Up_Detection: This application shows how to detect the wake-up event using the IIS2DULPX sensor.
-* X_NUCLEO_IKS5A1_ISM6HG256X_6D_Orientation: This application shows how to use ISM6HG256X to find out the 6D orientation and display data on a hyperterminal.
-* X_NUCLEO_IKS5A1_ISM6HG256X_Double_Tap_Detection: This application shows how to detect the double tap event using the ISM6HG256X.
-* X_NUCLEO_IKS5A1_ISM6HG256X_FIFO_Polling: This application shows how to get data from FIFO in pooling mode and print them on terminal.
-* X_NUCLEO_IKS5A1_ISM6HG256X_FIFO_Interrupt: This application shows how to get data from FIFO using interrupt and print them on terminal.
-* X_NUCLEO_IKS5A1_ISM6HG256X_Free_Fall_Detection: This application shows how to detect the free fall event using the ISM6HG256X.
-* X_NUCLEO_IKS5A1_ISM6HG256X_Pedometer: This application shows how to use ISM6HG256X to count steps.
-* X_NUCLEO_IKS5A1_ISM6HG256X_Single_Tap_Detection: This application shows how to detect the single tap event using the ISM6HG256X.
-* X_NUCLEO_IKS5A1_ISM6HG256X_Tilt_Detection: This application shows how to detect the tilt event using the ISM6HG256X.
-* X_NUCLEO_IKS5A1_ISM6HG256X_Wake_Up_Detection: This application shows how to detect the wake-up event using the ISM6HG256X.
-* X_NUCLEO_IKS5A1_ISM330IS_ISPU_Sensor_Fusion: This application implements the sensor fusion of the accelerometer and gyroscope,
+* X_NUCLEO_IKS5A1_HelloWorld_I3C: This application shows how to use the IIS2DULPX, ILPS22QS and ISM6HG256X sensors over I3C using SETDASA.
+* X_NUCLEO_IKS5A1_HelloWorld_I3C_ENTDAA: This application shows how to discover and use the IIS2DULPX, ILPS22QS and ISM6HG256X sensors over I3C.
+* X_NUCLEO_IKS5A1_IIS2DULPX_6D_Orientation_I2C: This application shows how to use IIS2DULPX sensor to find out the 6D orientation and display data on a hyperterminal.
+* X_NUCLEO_IKS5A1_IIS2DULPX_Wake_Up_Detection_I2C: This application shows how to detect the wake-up event using the IIS2DULPX sensor.
+* X_NUCLEO_IKS5A1_ISM6HG256X_6D_Orientation_I2C: This application shows how to use ISM6HG256X to find out the 6D orientation and display data on a hyperterminal.
+* X_NUCLEO_IKS5A1_ISM6HG256X_Double_Tap_Detection_I2C: This application shows how to detect the double tap event using the ISM6HG256X.
+* X_NUCLEO_IKS5A1_ISM6HG256X_FIFO_Polling_I2C: This application shows how to get data from FIFO in pooling mode and print them on terminal.
+* X_NUCLEO_IKS5A1_ISM6HG256X_FIFO_Interrupt_I2C: This application shows how to get data from FIFO using interrupt and print them on terminal.
+* X_NUCLEO_IKS5A1_ISM6HG256X_Free_Fall_Detection_I2C: This application shows how to detect the free fall event using the ISM6HG256X.
+* X_NUCLEO_IKS5A1_ISM6HG256X_Pedometer_I2C: This application shows how to use ISM6HG256X to count steps.
+* X_NUCLEO_IKS5A1_ISM6HG256X_Single_Tap_Detection_I2C: This application shows how to detect the single tap event using the ISM6HG256X.
+* X_NUCLEO_IKS5A1_ISM6HG256X_Tilt_Detection_I2C: This application shows how to detect the tilt event using the ISM6HG256X.
+* X_NUCLEO_IKS5A1_ISM6HG256X_Wake_Up_Detection_I2C: This application shows how to detect the wake-up event using the ISM6HG256X.
+* X_NUCLEO_IKS5A1_ISM330IS_ISPU_Sensor_Fusion_I2C: This application implements the sensor fusion of the accelerometer and gyroscope,
 configured in high-performance mode at 104 Hz. The configuration generates an interrupt on INT1 when the quaternion for the new sample 
 is computed and available in the output registers.
-* X_NUCLEO_IKS5A1_ISM330IS_ISPU_Tap: This application implements the tap detection solution based on the accelerometer data. 
+* X_NUCLEO_IKS5A1_ISM330IS_ISPU_Tap_I2C: This application implements the tap detection solution based on the accelerometer data. 
 The configuration generates an interrupt on INT1 when the tap event for the new sample is computed and available in the output registers.
 
 # Dependencies

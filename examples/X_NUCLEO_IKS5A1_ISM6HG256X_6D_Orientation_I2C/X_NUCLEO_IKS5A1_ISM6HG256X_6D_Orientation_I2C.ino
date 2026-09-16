@@ -1,7 +1,7 @@
 /*
-   @file    X_NUCLEO_IKS5A1_IIS2DULPX_6D_Orientation.ino
+  @file    X_NUCLEO_IKS5A1_ISM6HG256X_6D_Orientation_I2C.ino
    @author  STMicroelectronics
-   @brief   Example to use the IIS2DULPX 6D Orientation
+   @brief   Example to use the ISM6HG256X 6D Orientation
  *******************************************************************************
    Copyright (c) 2025, STMicroelectronics
    All rights reserved.
@@ -11,12 +11,12 @@
                           opensource.org/licenses/BSD-3-Clause
  *******************************************************************************
 */
-#include <IIS2DULPXSensor.h>
+#include <ISM6HG256XSensor.h>
 
-#define INT1_pin A2
+#define INT1_pin 5
 
-IIS2DULPXSensor IIS2DULPX(&Wire);
-// Interrupts.
+ISM6HG256XSensor ISM6HG256X(&Wire);
+//Interrupts.
 volatile int mems_event = 0;
 
 char report[256];
@@ -27,42 +27,39 @@ void sendOrientation();
 void setup()
 {
 
-  // Initialize serial.
+  // Initlialize serial.
   Serial.begin(115200);
   delay(1000);
 
-  // Initialize LED.
+  // Initlialize Led.
   pinMode(LED_BUILTIN, OUTPUT);
 
-  // Initialize I2C.
+  // Initlialize i2c.
   Wire.begin();
 
   // Enable INT1 pin.
   attachInterrupt(INT1_pin, INT1Event_cb, RISING);
 
-  // Initialize components.
-  IIS2DULPX.begin();
-  IIS2DULPX.Enable_X();
+  // Initlialize components.
+  ISM6HG256X.begin();
+  ISM6HG256X.Enable_X();
+
   // Enable 6D Orientation.
-  IIS2DULPXStatusTypeDef ret = IIS2DULPX.Enable_6D_Orientation(IIS2DULPX_INT1_PIN);
+  ISM6HG256X.Enable_6D_Orientation(ISM6HG256X_INT1_PIN);
 }
 
 void loop()
 {
-  if (true) {
+  if (mems_event) {
     mems_event = 0;
-
-    // Initialize the structure to zero at the beginning of each loop using memset
-    IIS2DULPX_Event_Status_t status;
-    memset(&status, 0, sizeof(IIS2DULPX_Event_Status_t));
-
-    IIS2DULPX.Get_X_Event_Status(&status);
+    ISM6HG256X_Event_Status_t status;
+    ISM6HG256X.Get_X_Event_Status(&status);
 
     if (status.D6DOrientationStatus) {
       // Send 6D Orientation
       sendOrientation();
 
-      // LED blinking.
+      // Led blinking.
       digitalWrite(LED_BUILTIN, HIGH);
       delay(100);
       digitalWrite(LED_BUILTIN, LOW);
@@ -74,6 +71,7 @@ void INT1Event_cb()
 {
   mems_event = 1;
 }
+
 void sendOrientation()
 {
   uint8_t xl = 0;
@@ -83,14 +81,14 @@ void sendOrientation()
   uint8_t zl = 0;
   uint8_t zh = 0;
 
-  IIS2DULPX.Get_6D_Orientation_XL(&xl);
-  IIS2DULPX.Get_6D_Orientation_XH(&xh);
-  IIS2DULPX.Get_6D_Orientation_YL(&yl);
-  IIS2DULPX.Get_6D_Orientation_YH(&yh);
-  IIS2DULPX.Get_6D_Orientation_ZL(&zl);
-  IIS2DULPX.Get_6D_Orientation_ZH(&zh);
+  ISM6HG256X.Get_6D_Orientation_XL(&xl);
+  ISM6HG256X.Get_6D_Orientation_XH(&xh);
+  ISM6HG256X.Get_6D_Orientation_YL(&yl);
+  ISM6HG256X.Get_6D_Orientation_YH(&yh);
+  ISM6HG256X.Get_6D_Orientation_ZL(&zl);
+  ISM6HG256X.Get_6D_Orientation_ZH(&zh);
 
-  if (xl == 1 && yl == 0 && zl == 0 && xh == 0 && yh == 0 && zh == 0) {
+  if (xl == 0 && yl == 0 && zl == 0 && xh == 0 && yh == 1 && zh == 0) {
     sprintf(report, "\r\n  ________________  " \
             "\r\n |                | " \
             "\r\n |  *             | " \
@@ -101,7 +99,7 @@ void sendOrientation()
             "\r\n |________________| \r\n");
   }
 
-  else if (xl == 0 && yl == 1 && zl == 0 && xh == 0 && yh == 0 && zh == 0) {
+  else if (xl == 1 && yl == 0 && zl == 0 && xh == 0 && yh == 0 && zh == 0) {
     sprintf(report, "\r\n  ________________  " \
             "\r\n |                | " \
             "\r\n |             *  | " \
@@ -112,7 +110,7 @@ void sendOrientation()
             "\r\n |________________| \r\n");
   }
 
-  else if (xl == 0 && yl == 0 && zl == 0 && xh == 0 && yh == 1 && zh == 0) {
+  else if (xl == 0 && yl == 0 && zl == 0 && xh == 1 && yh == 0 && zh == 0) {
     sprintf(report, "\r\n  ________________  " \
             "\r\n |                | " \
             "\r\n |                | " \
@@ -123,7 +121,7 @@ void sendOrientation()
             "\r\n |________________| \r\n");
   }
 
-  else if (xl == 0 && yl == 0 && zl == 0 && xh == 1 && yh == 0 && zh == 0) {
+  else if (xl == 0 && yl == 1 && zl == 0 && xh == 0 && yh == 0 && zh == 0) {
     sprintf(report, "\r\n  ________________  " \
             "\r\n |                | " \
             "\r\n |                | " \
