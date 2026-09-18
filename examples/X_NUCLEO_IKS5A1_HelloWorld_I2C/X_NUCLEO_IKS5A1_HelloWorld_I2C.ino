@@ -1,5 +1,5 @@
 /*
-   @file    X_NUCLEO_IKS5A1_HelloWorld.ino
+  @file    X_NUCLEO_IKS5A1_HelloWorld_I2C.ino
    @author  STMicroelectronics
    @brief   Example to use the STMicrolectronics X-NUCLEO-IKS5A1
  *******************************************************************************

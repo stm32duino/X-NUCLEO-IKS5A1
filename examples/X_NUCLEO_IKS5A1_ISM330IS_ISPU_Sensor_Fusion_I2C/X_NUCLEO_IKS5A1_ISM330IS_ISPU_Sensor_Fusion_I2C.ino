@@ -1,5 +1,5 @@
 /*
-   @file    X_NUCLEO_IKS5A1_ISM330IS_ISPU_Sensor_Fusion.ino
+  @file    X_NUCLEO_IKS5A1_ISM330IS_ISPU_Sensor_Fusion_I2C.ino
    @author  STMicroelectronics
    @brief   Example to use the ISM330IS ISPU Sensor Fusion of the accelerometer and gyroscope, configured in high-performance mode at 104 Hz.
  *******************************************************************************

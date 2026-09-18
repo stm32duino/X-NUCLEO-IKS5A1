@@ -1,7 +1,7 @@
 /*
-   @file    X_NUCLEO_IKS5A1_IIS2DULPX_Wake_Up_Detection.ino
+  @file    X_NUCLEO_IKS5A1_ISM6HG256X_Free_Fall_Detection_I2C.ino
    @author  STMicroelectronics
-   @brief   Example to use the IIS2DULPX Wake Up Detection
+   @brief   Example to use the ISM6HG256X Free Fall Detection
  *******************************************************************************
    Copyright (c) 2025, STMicroelectronics
    All rights reserved.
@@ -11,55 +11,54 @@
                           opensource.org/licenses/BSD-3-Clause
  *******************************************************************************
 */
+#include <ISM6HG256XSensor.h>
 
+#define INT1_pin 5
 
-#include <IIS2DULPXSensor.h>
-
-#define INT1_pin A2
-
-IIS2DULPXSensor IIS2DULPX(&Wire);
+ISM6HG256XSensor ISM6HG256X(&Wire);
 
 //Interrupts.
 volatile int mems_event = 0;
-
 void INT1Event_cb();
+
 
 void setup()
 {
 
-  // Initialize LED for status indication
+  // Initlialize serial.
+  Serial.begin(115200);
+  delay(1000);
+
+  // Initlialize Led.
   pinMode(LED_BUILTIN, OUTPUT);
 
-  // Initialize serial for output
-  Serial.begin(115200);
-
-  // Initialize bus interface
+  // Initlialize i2c.
   Wire.begin();
 
   // Enable INT1 pin.
   attachInterrupt(INT1_pin, INT1Event_cb, RISING);
 
   // Initlialize components.
-  IIS2DULPX.begin();
-  IIS2DULPX.Enable_X();
+  ISM6HG256X.begin();
+  ISM6HG256X.Enable_X();
 
-  // Enable Wake Up Detection.
-  IIS2DULPX.Enable_Wake_Up_Detection(IIS2DULPX_INT1_PIN);
+  // Enable Free Fall Detection.
+  ISM6HG256X.Enable_Free_Fall_Detection(ISM6HG256X_INT1_PIN);
 }
 
 void loop()
 {
   if (mems_event) {
     mems_event = 0;
-    IIS2DULPX_Event_Status_t status;
-    IIS2DULPX.Get_X_Event_Status(&status);
-    if (status.WakeUpStatus) {
+    ISM6HG256X_Event_Status_t status;
+    ISM6HG256X.Get_X_Event_Status(&status);
+
+    if (status.FreeFallStatus) {
       // Led blinking.
       digitalWrite(LED_BUILTIN, HIGH);
       delay(100);
       digitalWrite(LED_BUILTIN, LOW);
-
-      Serial.println("Wake up Detected!");
+      Serial.println("Free Fall Detected!");
     }
   }
 }
