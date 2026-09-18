@@ -12,7 +12,7 @@ There are several examples with the X-NUCLEO-IKS5A1 library.
 * X_NUCLEO_IKS5A1_HelloWorld_I2C: This application provides a simple example of usage of the X-NUCLEO-IKS5A1 
 Expansion Board. It shows how to display on a hyperterminal the values of all on-board industrial MEMS sensors.
 * X_NUCLEO_IKS5A1_HelloWorld_I3C: This application shows how to use the IIS2DULPX, ILPS22QS and ISM6HG256X sensors over I3C using SETDASA.
-* X_NUCLEO_IKS5A1_HelloWorld_I3C_ENTDAA: This application shows how to discover and use the IIS2DULPX, ILPS22QS and ISM6HG256X sensors over I3C.
+* X_NUCLEO_IKS5A1_HelloWorld_I3C_ENTDAA: This application shows how to discover and use the IIS2DULPX, ILPS22QS and ISM6HG256X sensors over I3C using ENTDAA.
 * X_NUCLEO_IKS5A1_IIS2DULPX_6D_Orientation_I2C: This application shows how to use IIS2DULPX sensor to find out the 6D orientation and display data on a hyperterminal.
 * X_NUCLEO_IKS5A1_IIS2DULPX_Wake_Up_Detection_I2C: This application shows how to detect the wake-up event using the IIS2DULPX sensor.
 * X_NUCLEO_IKS5A1_ISM6HG256X_6D_Orientation_I2C: This application shows how to use ISM6HG256X to find out the 6D orientation and display data on a hyperterminal.
