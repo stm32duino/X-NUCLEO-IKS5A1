@@ -34,7 +34,7 @@ void setup()
     Serial.println("resetDynamicAddresses() failed");
     while (1) {}
   }
-  if (!I3C.isI3CDeviceReady(0x19)) {
+  if (!I3C.isI3CDeviceReady(IIS2DULPX_I3C_ADD_H)) {
     Serial.println("isI3CDeviceReady() failed");
     while (1) {}
   }
@@ -45,34 +45,74 @@ void setup()
     while (1) {}
   }
 
-  bool accFound = false;
-  bool pressTempFound = false;
-  bool accGyrFound = false;
+  uint8_t iisDynAddr = 0U;
+  uint8_t ilpDynAddr = 0U;
+  uint8_t ismDynAddr = 0U;
+
   for (size_t index = 0; index < found; ++index) {
-    if (!accFound && Acc.begin(devices[index].dynAddr) == IIS2DULPX_OK) {
-      accFound = true;
+    Serial.println(devices[index].pid, HEX);
+    if (devices[index].pid == IIS2DULPX_I3C_PID_H) {
+      iisDynAddr = devices[index].dynAddr;
+      Serial.print("iisDynAddr=");
+      Serial.println(iisDynAddr, HEX);
+    } else if (devices[index].pid == ILPS22QS_I3C_PID) {
+      ilpDynAddr = devices[index].dynAddr;
+      Serial.print("ilpDynAddr=");
+      Serial.println(ilpDynAddr, HEX);
+    } else if (devices[index].pid == ISM6HG256X_I3C_PID_L) {
+      ismDynAddr = devices[index].dynAddr;
+      Serial.print("ismDynAddr=");
+      Serial.println(ismDynAddr, HEX);
     }
-    if (!pressTempFound && PressTemp.begin(devices[index].dynAddr) == ILPS22QS_OK) {
-      pressTempFound = true;
-    }
-    if (!accGyrFound && AccGyr.begin(devices[index].dynAddr) == ISM6HG256X_OK) {
-      accGyrFound = true;
+
+    if (iisDynAddr != 0U && ilpDynAddr != 0U && ismDynAddr != 0U) {
+      break;
     }
   }
 
-  if (!accFound || !pressTempFound || !accGyrFound) {
-    Serial.println("One or more sensors not found");
+  if (iisDynAddr == 0U) {
+    Serial.println("IIS2DULPX not found");
     while (1) {}
   }
+  if (ilpDynAddr == 0U) {
+    Serial.println("ILPS22QS not found");
+    while (1) {}
+  }
+  if (ismDynAddr == 0U) {
+    Serial.println("ISM6HG256X not found");
+    while (1) {}
+  }
+
   if (!I3C.setClock(12500000)) {
     Serial.println("setClock() failed");
     while (1) {}
   }
-  if (Acc.Enable_X() != IIS2DULPX_OK ||
-      PressTemp.Enable() != ILPS22QS_OK ||
-      AccGyr.Enable_X() != ISM6HG256X_OK ||
-      AccGyr.Enable_G() != ISM6HG256X_OK) {
-    Serial.println("sensor Enable() failed");
+  if (Acc.begin(iisDynAddr) != IIS2DULPX_OK) {
+    Serial.println("Acc.begin() failed");
+    while (1) {}
+  }
+  if (PressTemp.begin(ilpDynAddr) != ILPS22QS_OK) {
+    Serial.println("PressTemp.begin() failed");
+    while (1) {}
+  }
+  if (AccGyr.begin(ismDynAddr) != ISM6HG256X_OK) {
+    Serial.println("AccGyr.begin() failed");
+    while (1) {}
+  }
+  if (Acc.Enable_X() != IIS2DULPX_OK) {
+    Serial.println("IIS2DULPX Enable_X() failed");
+    while (1) {}
+  }
+  if (PressTemp.Enable() != ILPS22QS_OK) {
+    Serial.println("ILPS22QS Enable() failed");
+    while (1) {}
+  }
+  if (AccGyr.Enable_X() != ISM6HG256X_OK) {
+    Serial.println("ISM6HG256X Enable_X() failed");
+    while (1) {}
+  }
+  if (AccGyr.Enable_G() != ISM6HG256X_OK) {
+    Serial.println("ISM6HG256X Enable_G() failed");
     while (1) {}
   }
 }
